@@ -105,17 +105,15 @@ public class LinkedList<T>
     {
         if (Head == null)
             return "List is empty";
-
-        var itr = Head;
+        
         var result = "";
 
-        while (itr != null)
+        for (var itr = Head; itr != null; itr = itr.Next)
         {
             if (itr.Next != null)
                 result += itr.Value + " --> ";
             else
                 result += itr.Value;
-            itr = itr.Next;
         }
 
         return $"LinkedList({result})";
