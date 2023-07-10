@@ -67,6 +67,59 @@ public class LinkedListTests
         
         Assert.Equal("LinkedList(1 --> 2 --> 3)", ll.ToString());
     }
+
+    [Fact]
+    public void InsertAfterValue()
+    {
+        var ll = new LinkedList<string>();
+
+        ll.InsertValues("banana", "mango", "grapes");
+        
+        ll.InsertAfterValue("mango", "apple");
+        
+        Assert.Equal("LinkedList(banana --> mango --> apple --> grapes)", ll.ToString());
+    }
+    
+    [Fact]
+    public void InsertAfterValue_Empty()
+    {
+        var ll = new LinkedList<string>();
+        
+        ll.InsertAfterValue("a", "b");
+
+        Assert.Equal(0, ll.Count());
+    }
+    
+    [Fact]
+    public void InsertAfterValue_One()
+    {
+        var ll = new LinkedList<string>("mango");
+        
+        ll.InsertAfterValue("mango", "banana");
+        Assert.Equal("LinkedList(mango --> banana)", ll.ToString());
+    }
+    
+    [Fact]
+    public void RemoveByValue()
+    {
+        var ll = new LinkedList<string>();
+        
+        ll.InsertValues("a", "b", "c");
+
+        ll.RemoveByValue("b");
+        
+        Assert.Equal("LinkedList(a --> c)", ll.ToString());
+    }
+    
+    [Fact]
+    public void RemoveByValue_One()
+    {
+        var ll = new LinkedList<string>("a");
+
+        ll.RemoveByValue("a");
+        
+        Assert.Equal(0, ll.Count());
+    }
 }
 
 public class Node<T>
@@ -83,16 +136,16 @@ public class Node<T>
 
 public class LinkedList<T>
 {
-    public Node<T>? Head { get; set; }
+    public Node<T>? Head { get; private set; }
 
-    public LinkedList() : this(null)
+    public LinkedList()
     {
+        Head = null;
     }
 
-    private LinkedList(Node<T>? head) => Head = head;
-
-    public LinkedList(T firstElement) : this(new Node<T>(firstElement))
+    public LinkedList(T value) 
     {
+        Head = new Node<T>(value);
     }
 
     public void InsertAtStart(T value)
@@ -169,7 +222,22 @@ public class LinkedList<T>
         }
     }
 
-    private int Count()
+    public void InsertAfterValue(T existingValue, T value)
+    {
+        if (Head == null)
+            return;
+
+        for (var itr = Head; itr != null; itr = itr.Next)
+        {
+            if (itr.Value != null && itr.Value.Equals(existingValue))
+            {
+                itr.Next = new Node<T>(value, itr.Next);
+                break;
+            }
+        }
+    }
+
+    public int Count()
     {
         var count = 0;
         var itr = Head;
@@ -180,5 +248,27 @@ public class LinkedList<T>
         }
 
         return count;
+    }
+
+    public void RemoveByValue(T value)
+    {
+        if (Head == null)
+            return;
+
+        if (Head.Value != null && Head.Value.Equals(value))
+        {
+            Head = Head.Next;
+            return;
+        }
+
+        Node<T>? previous = null;
+        for (var itr = Head; itr != null; itr = itr.Next)
+        {
+            if (itr.Next != null && itr.Next.Value != null && itr.Next.Value.Equals(value))
+            {
+                itr.Next = itr.Next.Next;
+                break;
+            }
+        }
     }
 }
