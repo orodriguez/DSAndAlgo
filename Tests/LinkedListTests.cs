@@ -1,125 +1,110 @@
 namespace Tests;
 
-using StringLinkedList = DataStructures.LinkedList.LinkedList<string>;
-
 public class LinkedListTests
 {
-    [Fact]
-    public void Constructor()
-    {
-        var ll = new StringLinkedList();
+    private readonly DataStructures.LinkedList.LinkedList<string> _subject;
 
-        Assert.Null(ll.Head);
-    }
+    public LinkedListTests() =>
+        _subject = new DataStructures.LinkedList.LinkedList<string>();
 
     [Fact]
-    public void ConvertToString_Empty()
-    {
-        var ll = new StringLinkedList();
+    public void Constructor() =>
+        Assert.Null(_subject.Head);
 
-        Assert.Equal("List is empty", ll.ToString());
-    }
+    [Fact]
+    public void ConvertToString_Empty() => 
+        Assert.Equal("List is empty", _subject.ToString());
 
     [Fact]
     public void ConvertToString_OneElement()
     {
-        var ll = new StringLinkedList("Foo");
+        _subject.InsertValues("Foo");
 
-        Assert.Equal("LinkedList(Foo)", ll.ToString());
+        Assert.Equal("LinkedList(Foo)", _subject.ToString());
     }
 
     [Fact]
     public void InsertAtStart()
     {
-        var ll = new StringLinkedList("Bar");
+        _subject.InsertValues("Bar");
 
-        ll.InsertAtStart("Foo");
-        
-        Assert.Equal("LinkedList(Foo --> Bar)", ll.ToString());
+        _subject.InsertAtStart("Foo");
+
+        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
     }
 
     [Fact]
     public void InsertAtEnd()
     {
-        var ll = new StringLinkedList("Foo");
+        _subject.InsertValues("Foo");
 
-        ll.InsertAtEnd("Bar");
-        
-        Assert.Equal("LinkedList(Foo --> Bar)", ll.ToString());
+        _subject.InsertAtEnd("Bar");
+
+        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
     }
-    
+
     [Fact]
     public void InsertValues()
     {
-        var ll = new StringLinkedList();
+        _subject.InsertValues("Foo", "Bar");
 
-        ll.InsertValues("Foo", "Bar");
-        
-        Assert.Equal("LinkedList(Foo --> Bar)", ll.ToString());
+        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
     }
-    
+
     [Fact]
     public void InsertAt()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<int>();
-        
-        ll.InsertValues(1, 3);
-        
-        ll.InsertAt(1, 2);
-        
-        Assert.Equal("LinkedList(1 --> 2 --> 3)", ll.ToString());
+        _subject.InsertValues("a", "c");
+
+        _subject.InsertAt(1, "b");
+
+        Assert.Equal("LinkedList(a --> b --> c)", _subject.ToString());
     }
 
     [Fact]
     public void InsertAfterValue()
     {
-        var ll = new StringLinkedList();
+        _subject.InsertValues("banana", "mango", "grapes");
 
-        ll.InsertValues("banana", "mango", "grapes");
-        
-        ll.InsertAfterValue("mango", "apple");
-        
-        Assert.Equal("LinkedList(banana --> mango --> apple --> grapes)", ll.ToString());
+        _subject.InsertAfterValue("mango", "apple");
+
+        Assert.Equal("LinkedList(banana --> mango --> apple --> grapes)", _subject.ToString());
     }
-    
+
     [Fact]
     public void InsertAfterValue_Empty()
     {
-        var ll = new StringLinkedList();
-        
-        ll.InsertAfterValue("a", "b");
+        _subject.InsertAfterValue("a", "b");
 
-        Assert.Equal(0, ll.Count());
+        Assert.Equal(0, _subject.Count());
     }
-    
+
     [Fact]
     public void InsertAfterValue_One()
     {
-        var ll = new StringLinkedList("mango");
-        
-        ll.InsertAfterValue("mango", "banana");
-        Assert.Equal("LinkedList(mango --> banana)", ll.ToString());
+        _subject.InsertValues("mango");
+
+        _subject.InsertAfterValue("mango", "banana");
+        Assert.Equal("LinkedList(mango --> banana)", _subject.ToString());
     }
-    
+
     [Fact]
     public void RemoveByValue()
     {
-        var ll = new StringLinkedList();
-        
-        ll.InsertValues("a", "b", "c");
+        _subject.InsertValues("a", "b", "c");
 
-        ll.RemoveByValue("b");
-        
-        Assert.Equal("LinkedList(a --> c)", ll.ToString());
+        _subject.RemoveByValue("b");
+
+        Assert.Equal("LinkedList(a --> c)", _subject.ToString());
     }
-    
+
     [Fact]
     public void RemoveByValue_One()
     {
-        var ll = new StringLinkedList("a");
+        _subject.InsertValues("a");
 
-        ll.RemoveByValue("a");
-        
-        Assert.Equal(0, ll.Count());
+        _subject.RemoveByValue("a");
+
+        Assert.Equal(0, _subject.Count());
     }
 }

@@ -1,6 +1,6 @@
 namespace DataStructures.LinkedList;
 
-public class LinkedList<T>
+public class LinkedList<T> : ILinkedList<T>
 {
     public Node<T>? Head { get; private set; }
 
