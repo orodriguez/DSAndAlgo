@@ -1,11 +1,13 @@
 namespace Tests;
 
+using StringLinkedList = DataStructures.LinkedList.LinkedList<string>;
+
 public class LinkedListTests
 {
     [Fact]
     public void Constructor()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
 
         Assert.Null(ll.Head);
     }
@@ -13,7 +15,7 @@ public class LinkedListTests
     [Fact]
     public void ConvertToString_Empty()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
 
         Assert.Equal("List is empty", ll.ToString());
     }
@@ -21,7 +23,7 @@ public class LinkedListTests
     [Fact]
     public void ConvertToString_OneElement()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>("Foo");
+        var ll = new StringLinkedList("Foo");
 
         Assert.Equal("LinkedList(Foo)", ll.ToString());
     }
@@ -29,7 +31,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAtStart()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>("Bar");
+        var ll = new StringLinkedList("Bar");
 
         ll.InsertAtStart("Foo");
         
@@ -39,7 +41,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAtEnd()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>("Foo");
+        var ll = new StringLinkedList("Foo");
 
         ll.InsertAtEnd("Bar");
         
@@ -49,7 +51,7 @@ public class LinkedListTests
     [Fact]
     public void InsertValues()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
 
         ll.InsertValues("Foo", "Bar");
         
@@ -71,7 +73,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
 
         ll.InsertValues("banana", "mango", "grapes");
         
@@ -83,7 +85,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue_Empty()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
         
         ll.InsertAfterValue("a", "b");
 
@@ -93,7 +95,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue_One()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>("mango");
+        var ll = new StringLinkedList("mango");
         
         ll.InsertAfterValue("mango", "banana");
         Assert.Equal("LinkedList(mango --> banana)", ll.ToString());
@@ -102,7 +104,7 @@ public class LinkedListTests
     [Fact]
     public void RemoveByValue()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>();
+        var ll = new StringLinkedList();
         
         ll.InsertValues("a", "b", "c");
 
@@ -114,7 +116,7 @@ public class LinkedListTests
     [Fact]
     public void RemoveByValue_One()
     {
-        var ll = new DataStructures.LinkedList.LinkedList<string>("a");
+        var ll = new StringLinkedList("a");
 
         ll.RemoveByValue("a");
         
