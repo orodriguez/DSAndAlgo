@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.InteropServices.JavaScript;
 
 namespace DataStructures.LinkedList;
@@ -139,12 +140,11 @@ public class SimpleLinkedList<T> : ILinkedList<T>
         }
     }
 
-    public T[] ToArray() => 
-        ToEnumerable().ToArray();
-
-    private IEnumerable<T> ToEnumerable()
+    public IEnumerator<T> GetEnumerator()
     {
         for (var itr = Head; itr != null; itr = itr.Next)
             yield return itr.Value;
     }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

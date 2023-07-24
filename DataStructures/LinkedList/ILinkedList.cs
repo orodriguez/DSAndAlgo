@@ -1,6 +1,6 @@
 namespace DataStructures.LinkedList;
 
-public interface ILinkedList<T>
+public interface ILinkedList<T> : IEnumerable<T>
 {
     Node<T>? Head { get; }
     void InsertAtStart(T value);
