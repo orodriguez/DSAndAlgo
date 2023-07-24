@@ -151,4 +151,28 @@ public class DoublyLinkedListTest
 
         Assert.Empty(dll);
     }
+    
+    [Fact]
+    public void Count_Empty()
+    {
+        var dll = new DoublyLinkedList<string>();
+
+        Assert.Equal(0, dll.Count());
+    }
+    
+    [Fact]
+    public void Count_One()
+    {
+        var dll = new DoublyLinkedList<string>("a");
+
+        Assert.Equal(1, dll.Count());
+    }
+    
+    [Fact]
+    public void Count_Many()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b", "c");
+
+        Assert.Equal(3, dll.Count());
+    }
 }

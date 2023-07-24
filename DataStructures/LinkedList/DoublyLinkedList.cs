@@ -98,7 +98,21 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     public int Count()
     {
-        throw new NotImplementedException();
+        if (Head == null)
+            return 0;
+
+        if (Head == Last)
+            return 1;
+
+        var itr = Head;
+        var count = 0;
+        while (itr != null)
+        {
+            count++;
+            itr = itr.Next;
+        }
+
+        return count;
     }
 
     public void RemoveByValue(T value)
