@@ -11,21 +11,30 @@ public class DoublyLinkedList<T> : ILinkedList<T>
     public void InsertAtStart(T value)
     {
         var node = new Node(value);
-        if (Head != null)
+        if (Head == null)
         {
-            Head.Previous = node;
-            node.Next = Head;
             Head = node;
+            Last = node;
             return;
         }
-        
+
+        Head.Previous = node;
+        node.Next = Head;
         Head = node;
-        Last = node;
     }
 
     public void InsertAtEnd(T value)
     {
-        throw new NotImplementedException();
+        var node = new Node(value);
+        if (Last == null)
+        {
+            InsertAtStart(value);
+            return;
+        }
+
+        Last.Next = node;
+        node.Previous = Last;
+        Last = node;
     }
 
     public void InsertValues(params T[] values)
@@ -52,11 +61,11 @@ public class DoublyLinkedList<T> : ILinkedList<T>
     {
         throw new NotImplementedException();
     }
-    
+
     public IEnumerator<T> GetEnumerator()
     {
         for (var itr = Head; itr != null; itr = itr.Next)
-            yield return itr.Value; 
+            yield return itr.Value;
     }
 
     public IEnumerable<T> EnumerateBackwards()
