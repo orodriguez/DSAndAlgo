@@ -137,11 +137,14 @@ public class DoublyLinkedList<T> : ILinkedList<T>
     private Node? FindNodeByValue(T existingValue)
     {
         var itr = Head;
-        while (itr != null && !itr.Value.Equals(existingValue))
+        while (itr != null)
         {
+            if (itr.Value != null && itr.Value.Equals(existingValue))
+                return itr;
+            
             itr = itr.Next;
         }
-        return itr;
+        return null;
     }
 
     private class Node
