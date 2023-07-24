@@ -18,24 +18,6 @@ public class SimpleLinkedList<T> : ILinkedList<T>
         Head = node;
     }
 
-    public override string ToString()
-    {
-        if (Head == null)
-            return "List is empty";
-        
-        var result = "";
-
-        for (var itr = Head; itr != null; itr = itr.Next)
-        {
-            if (itr.Next != null)
-                result += itr.Value + " --> ";
-            else
-                result += itr.Value;
-        }
-
-        return $"LinkedList({result})";
-    }
-
     public void InsertAtEnd(T value)
     {
         if (Head == null)

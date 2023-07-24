@@ -39,7 +39,7 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     public void InsertValues(params T[] values)
     {
-        throw new NotImplementedException();
+        foreach (var value in values) InsertAtEnd(value);
     }
 
     public void InsertAt(int index, T value)

@@ -52,4 +52,14 @@ public class DoublyLinkedListTest
         Assert.Equal(new[] {"Foo", "Bar"}, dll);
         Assert.Equal(new[] {"Bar", "Foo"}, dll.EnumerateBackwards());
     }
+    
+    [Fact]
+    public void InsertValues()
+    {
+        var dll = new DoublyLinkedList<string>();
+        dll.InsertValues("a", "b", "c");
+        
+        Assert.Equal(new[] {"a", "b", "c"}, dll);
+        Assert.Equal(new[] {"c", "b", "a"}, dll.EnumerateBackwards());
+    }
 }
