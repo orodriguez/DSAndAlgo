@@ -15,13 +15,12 @@ public class DoublyLinkedList<T> : ILinkedList<T>
         {
             Head.Previous = node;
             node.Next = Head;
+            Head = node;
+            return;
         }
-        else
-        {
-            Last = node;
-        }
-
+        
         Head = node;
+        Last = node;
     }
 
     public void InsertAtEnd(T value)
