@@ -5,105 +5,96 @@ namespace Tests;
 
 public class LinkedListTests
 {
-    private readonly SimpleLinkedList<string> _subject;
-
-    public LinkedListTests() =>
-        _subject = new SimpleLinkedList<string>();
-
     [Fact]
     public void Constructor() =>
-        Assert.Null(_subject.Head);
+        Assert.Null(LinkedList<string>().Head);
 
     [Fact]
     public void ConvertToString_Empty() =>
         Assert.Equal(Array.Empty<string>(), LinkedList<string>());
 
     [Fact]
-    public void ConvertToString_OneElement() => 
+    public void ConvertToString_OneElement() =>
         Assert.Equal(new[] { "Foo" }, LinkedList<string>("Foo"));
 
     [Fact]
     public void InsertAtStart()
     {
-        _subject.InsertValues("Bar");
+        var ll = LinkedList<string>("Bar");
+        ll.InsertAtStart("Foo");
 
-        _subject.InsertAtStart("Foo");
-
-        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
+        Assert.Equal(new[] { "Foo", "Bar" }, ll);
     }
 
     [Fact]
     public void InsertAtEnd()
     {
-        _subject.InsertValues("Foo");
+        var ll = LinkedList<string>("Foo");
+        ll.InsertAtEnd("Bar");
 
-        _subject.InsertAtEnd("Bar");
-
-        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
+        Assert.Equal(new[] { "Foo", "Bar" }, ll);
     }
 
     [Fact]
     public void InsertValues()
     {
-        _subject.InsertValues("Foo", "Bar");
+        var ll = LinkedList<string>();
+        ll.InsertValues("Foo", "Bar");
 
-        Assert.Equal("LinkedList(Foo --> Bar)", _subject.ToString());
+        Assert.Equal(new[] { "Foo", "Bar" }, ll);
     }
 
     [Fact]
     public void InsertAt()
     {
-        _subject.InsertValues("a", "c");
+        var ll = LinkedList<string>("a", "c");
+        ll.InsertAt(1, "b");
 
-        _subject.InsertAt(1, "b");
-
-        Assert.Equal("LinkedList(a --> b --> c)", _subject.ToString());
+        Assert.Equal(new[] { "a", "b", "c" }, ll);
     }
 
     [Fact]
     public void InsertAfterValue()
     {
-        _subject.InsertValues("banana", "mango", "grapes");
+        var ll = LinkedList<string>("banana", "mango", "grapes");
+        ll.InsertAfterValue("mango", "apple");
 
-        _subject.InsertAfterValue("mango", "apple");
-
-        Assert.Equal("LinkedList(banana --> mango --> apple --> grapes)", _subject.ToString());
+        Assert.Equal(new[] { "banana", "mango", "apple", "grapes" }, ll);
     }
 
     [Fact]
     public void InsertAfterValue_Empty()
     {
-        _subject.InsertAfterValue("a", "b");
+        var ll = LinkedList<string>();
+        ll.InsertAfterValue("a", "b");
 
-        Assert.Equal(0, _subject.Count());
+        Assert.Empty(ll);
     }
 
     [Fact]
     public void InsertAfterValue_One()
     {
-        _subject.InsertValues("mango");
-
-        _subject.InsertAfterValue("mango", "banana");
-        Assert.Equal("LinkedList(mango --> banana)", _subject.ToString());
+        var ll = LinkedList<string>("mango");
+        ll.InsertAfterValue("mango", "banana");
+        
+        Assert.Equal(new[] { "mango", "banana" }, ll);
     }
 
     [Fact]
     public void RemoveByValue()
     {
-        _subject.InsertValues("a", "b", "c");
+        var ll = LinkedList<string>("a", "b", "c");
+        ll.RemoveByValue("b");
 
-        _subject.RemoveByValue("b");
-
-        Assert.Equal("LinkedList(a --> c)", _subject.ToString());
+        Assert.Equal(new[] {"a", "c"}, ll);
     }
 
     [Fact]
     public void RemoveByValue_One()
     {
-        _subject.InsertValues("a");
+        var ll = LinkedList<string>("a");
+        ll.RemoveByValue("a");
 
-        _subject.RemoveByValue("a");
-
-        Assert.Equal(0, _subject.Count());
+        Assert.Empty(ll);
     }
 }
