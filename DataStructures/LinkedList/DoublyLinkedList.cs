@@ -1,15 +1,15 @@
 using System.Collections;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace DataStructures.LinkedList;
 
 public class DoublyLinkedList<T> : ILinkedList<T>
 {
-    public DoublyLinkedList(params T[] values) => 
-        InsertValues(values);
-    
     private Node? Head { get; set; } = null;
-
     private Node? Last { get; set; } = null;
+
+    public DoublyLinkedList(params T[] values) =>
+        InsertValues(values);
 
     public void InsertAtStart(T value)
     {
@@ -47,7 +47,34 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     public void InsertAt(int index, T value)
     {
-        throw new NotImplementedException();
+        switch (index)
+        {
+            case < 0:
+                throw new Exception("Invalid Index");
+            case 0:
+                InsertAtStart(value);
+                return;
+        }
+
+        var currentIndex = 0;
+        var itr = Head;
+        while (itr != null && currentIndex < index)
+        {
+            currentIndex++;
+            itr = itr.Next;
+        }
+
+        switch (itr)
+        {
+            case null when index > currentIndex:
+                throw new Exception("Invalid Index");
+            case null:
+                return;
+        }
+
+        var node = new Node(value, itr, itr.Previous);
+        itr.Previous!.Next = node;
+        itr.Previous = node;
     }
 
     public void InsertAfterValue(T existingValue, T value)
