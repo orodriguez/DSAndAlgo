@@ -4,6 +4,9 @@ namespace DataStructures.LinkedList;
 
 public class DoublyLinkedList<T> : ILinkedList<T>
 {
+    public DoublyLinkedList(params T[] values) => 
+        InsertValues(values);
+    
     private Node? Head { get; set; } = null;
 
     private Node? Last { get; set; } = null;

@@ -25,8 +25,7 @@ public class DoublyLinkedListTest
     [Fact]
     public void InsertAtStart_NonEmpty()
     {
-        var dll = new DoublyLinkedList<string>();
-        dll.InsertAtStart("Bar");
+        var dll = new DoublyLinkedList<string>("Bar");
         dll.InsertAtStart("Foo");
         
         Assert.Equal(new[] {"Foo", "Bar"}, dll);
@@ -45,8 +44,7 @@ public class DoublyLinkedListTest
     [Fact]
     public void InsertAtEnd_NonEmpty()
     {
-        var dll = new DoublyLinkedList<string>();
-        dll.InsertAtStart("Foo");
+        var dll = new DoublyLinkedList<string>("Foo");
         dll.InsertAtEnd("Bar");
         
         Assert.Equal(new[] {"Foo", "Bar"}, dll);
