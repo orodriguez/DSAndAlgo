@@ -4,7 +4,7 @@ namespace DataStructures.LinkedList;
 
 public class SimpleLinkedList<T> : ILinkedList<T>
 {
-    public Node<T>? Head { get; private set; }
+    public Node? Head { get; private set; }
 
     private SimpleLinkedList() => 
         Head = null;
@@ -14,7 +14,7 @@ public class SimpleLinkedList<T> : ILinkedList<T>
 
     public void InsertAtStart(T value)
     {
-        var node = new Node<T>(value, Head);
+        var node = new Node(value, Head);
         Head = node;
     }
 
@@ -40,7 +40,7 @@ public class SimpleLinkedList<T> : ILinkedList<T>
     {
         if (Head == null)
         {
-            Head = new Node<T>(value);
+            Head = new Node(value);
             return;
         }
 
@@ -49,7 +49,7 @@ public class SimpleLinkedList<T> : ILinkedList<T>
         while (itr.Next != null) 
             itr = itr.Next;
 
-        itr.Next = new Node<T>(value);
+        itr.Next = new Node(value);
     }
 
     public void InsertValues(params T[] values)
@@ -76,7 +76,7 @@ public class SimpleLinkedList<T> : ILinkedList<T>
         {
             if (currentIndex == index - 1)
             {
-                var node = new Node<T>(value, itr.Next);
+                var node = new Node(value, itr.Next);
                 itr.Next = node;
                 break;
             }
@@ -95,7 +95,7 @@ public class SimpleLinkedList<T> : ILinkedList<T>
         {
             if (itr.Value != null && itr.Value.Equals(existingValue))
             {
-                itr.Next = new Node<T>(value, itr.Next);
+                itr.Next = new Node(value, itr.Next);
                 break;
             }
         }
@@ -142,4 +142,16 @@ public class SimpleLinkedList<T> : ILinkedList<T>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    
+    public class Node
+    {
+        public Node(T value, Node? next = null)
+        {
+            Value = value;
+            Next = next;
+        }
+
+        public T Value { get; set; }
+        public Node? Next { get; set; }
+    }
 }

@@ -4,22 +4,12 @@ namespace DataStructures.LinkedList;
 
 public class DoublyLinkedList<T> : ILinkedList<T>
 {
-    public DoublyLinkedList(params T[] values)
-    {
-        throw new NotImplementedException();
-    }
+    private Node? Head { get; set; } = null;
 
-    public T[] ToArray()
-    {
-        throw new NotImplementedException();
-    }
+    private Node? Last { get; set; } = null;
 
-    public Node<T>? Head { get; }
-
-    public void InsertAtStart(T value)
-    {
-        throw new NotImplementedException();
-    }
+    public void InsertAtStart(T value) => 
+        Head = new Node(value);
 
     public void InsertAtEnd(T value)
     {
@@ -53,11 +43,26 @@ public class DoublyLinkedList<T> : ILinkedList<T>
     
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        for (var itr = Head; itr != null; itr = itr.Next)
+            yield return itr.Value; 
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    private class Node
+    {
+        public T Value { get; set; }
+        public Node? Next { get; set; }
+        public Node? Previous { get; set; }
+
+        public Node(T value, Node? next = null, Node? previous = null)
+        {
+            Value = value;
+            Next = next;
+            Previous = previous;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using DataStructures.LinkedList;
 
 namespace Tests;
@@ -5,10 +6,19 @@ namespace Tests;
 public class DoublyLinkedListTest
 {
     [Fact]
-    public void Constructor_HeadIsNull()
+    public void Constructor()
     {
         var dll = new DoublyLinkedList<int>();
         
-        Assert.Equal(new[] {1, 2}, dll);
+        Assert.Empty(dll);
+    }
+
+    [Fact]
+    public void InsertAtStart_Empty()
+    {
+        var dll = new DoublyLinkedList<string>();
+        dll.InsertAtStart("Foo");
+        
+        Assert.Equal("Foo", dll.First());
     }
 }

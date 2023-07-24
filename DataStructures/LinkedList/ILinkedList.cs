@@ -2,7 +2,6 @@ namespace DataStructures.LinkedList;
 
 public interface ILinkedList<T> : IEnumerable<T>
 {
-    Node<T>? Head { get; }
     void InsertAtStart(T value);
     void InsertAtEnd(T value);
     void InsertValues(params T[] values);
