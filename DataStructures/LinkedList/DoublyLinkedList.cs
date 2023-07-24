@@ -79,7 +79,21 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     public void InsertAfterValue(T existingValue, T value)
     {
-        throw new NotImplementedException();
+        var existingNode = FindNodeByValue(existingValue);
+
+        if (existingNode == null)
+            return;
+
+        if (existingNode.Next == null)
+        {
+            InsertAtEnd(value);
+            return;
+        }
+        
+        var newNode = new Node(value, existingNode.Next, existingNode);
+        
+        existingNode.Next.Previous = newNode;
+        existingNode.Next = newNode;
     }
 
     public int Count()
@@ -105,6 +119,16 @@ public class DoublyLinkedList<T> : ILinkedList<T>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    private Node? FindNodeByValue(T existingValue)
+    {
+        var itr = Head;
+        while (itr != null && !itr.Value.Equals(existingValue))
+        {
+            itr = itr.Next;
+        }
+        return itr;
+    }
 
     private class Node
     {

@@ -102,5 +102,53 @@ public class DoublyLinkedListTest
         Assert.Equal(new[] { "a", "b" }, dll);
         Assert.Equal(new[] { "b", "a" }, dll.EnumerateBackwards());
     }
+
+    [Fact]
+    public void InsertAfterValue_One()
+    {
+        var dll = new DoublyLinkedList<string>("a");
+        dll.InsertAfterValue("a", "b");
+
+        Assert.Equal(new[] { "a", "b"}, dll);
+        Assert.Equal(new[] { "b", "a"}, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void InsertAfterValue()
+    {
+        var dll = new DoublyLinkedList<string>("a", "c");
+        dll.InsertAfterValue("a", "b");
+
+        Assert.Equal(new[] { "a", "b", "c" }, dll);
+        Assert.Equal(new[] { "c", "b", "a" }, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void InsertAfterValue_ValueDoesNotExist()
+    {
+        var dll = new DoublyLinkedList<string>("a", "c");
+        dll.InsertAfterValue("d", "b");
+
+        Assert.Equal(new[] { "a", "c" }, dll);
+        Assert.Equal(new[] { "c", "a" }, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void InsertAfterValue_Last()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b");
+        dll.InsertAfterValue("b", "c");
+
+        Assert.Equal(new[] { "a", "b", "c" }, dll);
+        Assert.Equal(new[] { "c", "b", "a" }, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void InsertAfterValue_Empty()
+    {
+        var dll = new DoublyLinkedList<string>();
+        dll.InsertAfterValue("a", "b");
+
+        Assert.Empty(dll);
     }
 }
