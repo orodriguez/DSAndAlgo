@@ -3,19 +3,24 @@ using System.Runtime.InteropServices.JavaScript;
 
 namespace DataStructures.LinkedList;
 
+
+public static class SimpleLinkedList
+{
+    public static SimpleLinkedList<T> LinkedList<T>(params T[] values)
+    {
+        return new SimpleLinkedList<T>(values);
+    }
+}
+
 public class SimpleLinkedList<T> : ILinkedList<T>
 {
     public Node<T>? Head { get; private set; }
 
-    public SimpleLinkedList()
-    {
+    public SimpleLinkedList() => 
         Head = null;
-    }
 
-    public SimpleLinkedList(T value) 
-    {
-        Head = new Node<T>(value);
-    }
+    public SimpleLinkedList(params T[] values) : this() => 
+        InsertValues(values);
 
     public void InsertAtStart(T value)
     {

@@ -1,4 +1,5 @@
 using DataStructures.LinkedList;
+using static DataStructures.LinkedList.SimpleLinkedList;
 
 namespace Tests;
 
@@ -14,16 +15,12 @@ public class LinkedListTests
         Assert.Null(_subject.Head);
 
     [Fact]
-    public void ConvertToString_Empty() => 
-        Assert.Equal(Array.Empty<string>(), _subject.ToArray());
+    public void ConvertToString_Empty() =>
+        Assert.Equal(Array.Empty<string>(), LinkedList<string>());
 
     [Fact]
-    public void ConvertToString_OneElement()
-    {
-        _subject.InsertValues("Foo");
-
-        Assert.Equal("LinkedList(Foo)", _subject.ToString());
-    }
+    public void ConvertToString_OneElement() => 
+        Assert.Equal(new[] { "Foo" }, LinkedList<string>("Foo"));
 
     [Fact]
     public void InsertAtStart()
