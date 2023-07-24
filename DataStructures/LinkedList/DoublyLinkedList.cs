@@ -89,9 +89,9 @@ public class DoublyLinkedList<T> : ILinkedList<T>
             InsertAtEnd(value);
             return;
         }
-        
+
         var newNode = new Node(value, existingNode.Next, existingNode);
-        
+
         existingNode.Next.Previous = newNode;
         existingNode.Next = newNode;
     }
@@ -117,7 +117,33 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     public void RemoveByValue(T value)
     {
-        throw new NotImplementedException();
+        if (Head == null)
+            return;
+
+        var existingNode = FindNodeByValue(value);
+
+        if (existingNode == null)
+            return;
+
+        if (Head == Last)
+        {
+            Head = null;
+            Last = null;
+            return;
+        }
+
+        var previousNode = existingNode.Previous;
+        var nextNode = existingNode.Next;
+
+        if (nextNode == null)
+        {
+            previousNode.Next = null;
+            Last = previousNode;
+            return;
+        }
+        
+        nextNode.Previous = previousNode;
+        previousNode.Next = nextNode;
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -141,9 +167,10 @@ public class DoublyLinkedList<T> : ILinkedList<T>
         {
             if (itr.Value != null && itr.Value.Equals(existingValue))
                 return itr;
-            
+
             itr = itr.Next;
         }
+
         return null;
     }
 

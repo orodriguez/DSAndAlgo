@@ -175,4 +175,51 @@ public class DoublyLinkedListTest
 
         Assert.Equal(3, dll.Count());
     }
+    
+    [Fact]
+    public void RemoveByValue_One()
+    {
+        var dll = new DoublyLinkedList<string>("a");
+        dll.RemoveByValue("a");
+        
+        Assert.Empty(dll);
+    }
+    
+    [Fact]
+    public void RemoveByValue_Empty()
+    {
+        var dll = new DoublyLinkedList<string>();
+        dll.RemoveByValue("a");
+        
+        Assert.Empty(dll);
+    }
+    
+    [Fact]
+    public void RemoveByValue_NotFound()
+    {
+        var dll = new DoublyLinkedList<string>("b");
+        dll.RemoveByValue("a");
+        
+        Assert.Equal(new[] {"b"}, dll);
+    }
+    
+    [Fact]
+    public void RemoveByValue_InMiddle()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b", "c");
+        dll.RemoveByValue("b");
+        
+        Assert.Equal(new[] {"a", "c"}, dll);
+        Assert.Equal(new[] {"c", "a"}, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void RemoveByValue_Last()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b", "c");
+        dll.RemoveByValue("c");
+        
+        Assert.Equal(new[] {"a", "b"}, dll);
+        Assert.Equal(new[] {"b", "a"}, dll.EnumerateBackwards());
+    }
 }
