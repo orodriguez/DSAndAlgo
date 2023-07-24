@@ -1,5 +1,4 @@
 using DataStructures.LinkedList;
-using static DataStructures.LinkedList.SimpleLinkedList;
 
 namespace Tests;
 
@@ -7,20 +6,26 @@ public class LinkedListTests
 {
     [Fact]
     public void Constructor() =>
-        Assert.Null(LinkedList<string>().Head);
+        Assert.Null(new SimpleLinkedList<string>().Head);
 
     [Fact]
     public void ConvertToString_Empty() =>
-        Assert.Equal(Array.Empty<string>(), LinkedList<string>());
+        Assert.Equal(Array.Empty<string>(), 
+            new SimpleLinkedList<string>());
 
     [Fact]
-    public void ConvertToString_OneElement() =>
-        Assert.Equal(new[] { "Foo" }, LinkedList<string>("Foo"));
+    public void ConvertToString_OneElement()
+    {
+        string[] values = new[] { "Foo" };
+        Assert.Equal(new[] { "Foo" }, 
+            new SimpleLinkedList<string>(values));
+    }
 
     [Fact]
     public void InsertAtStart()
     {
-        var ll = LinkedList<string>("Bar");
+        string[] values = new[] { "Bar" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.InsertAtStart("Foo");
 
         Assert.Equal(new[] { "Foo", "Bar" }, ll);
@@ -29,7 +34,8 @@ public class LinkedListTests
     [Fact]
     public void InsertAtEnd()
     {
-        var ll = LinkedList<string>("Foo");
+        string[] values = new[] { "Foo" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.InsertAtEnd("Bar");
 
         Assert.Equal(new[] { "Foo", "Bar" }, ll);
@@ -38,7 +44,7 @@ public class LinkedListTests
     [Fact]
     public void InsertValues()
     {
-        var ll = LinkedList<string>();
+        var ll = new SimpleLinkedList<string>();
         ll.InsertValues("Foo", "Bar");
 
         Assert.Equal(new[] { "Foo", "Bar" }, ll);
@@ -47,7 +53,8 @@ public class LinkedListTests
     [Fact]
     public void InsertAt()
     {
-        var ll = LinkedList<string>("a", "c");
+        string[] values = new[] { "a", "c" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.InsertAt(1, "b");
 
         Assert.Equal(new[] { "a", "b", "c" }, ll);
@@ -56,7 +63,8 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue()
     {
-        var ll = LinkedList<string>("banana", "mango", "grapes");
+        string[] values = new[] { "banana", "mango", "grapes" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.InsertAfterValue("mango", "apple");
 
         Assert.Equal(new[] { "banana", "mango", "apple", "grapes" }, ll);
@@ -65,7 +73,7 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue_Empty()
     {
-        var ll = LinkedList<string>();
+        var ll = new SimpleLinkedList<string>();
         ll.InsertAfterValue("a", "b");
 
         Assert.Empty(ll);
@@ -74,7 +82,8 @@ public class LinkedListTests
     [Fact]
     public void InsertAfterValue_One()
     {
-        var ll = LinkedList<string>("mango");
+        string[] values = new[] { "mango" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.InsertAfterValue("mango", "banana");
         
         Assert.Equal(new[] { "mango", "banana" }, ll);
@@ -83,7 +92,8 @@ public class LinkedListTests
     [Fact]
     public void RemoveByValue()
     {
-        var ll = LinkedList<string>("a", "b", "c");
+        string[] values = new[] { "a", "b", "c" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.RemoveByValue("b");
 
         Assert.Equal(new[] {"a", "c"}, ll);
@@ -92,7 +102,8 @@ public class LinkedListTests
     [Fact]
     public void RemoveByValue_One()
     {
-        var ll = LinkedList<string>("a");
+        string[] values = new[] { "a" };
+        var ll = new SimpleLinkedList<string>(values);
         ll.RemoveByValue("a");
 
         Assert.Empty(ll);

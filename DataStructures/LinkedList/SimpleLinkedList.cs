@@ -1,22 +1,12 @@
 using System.Collections;
-using System.Runtime.InteropServices.JavaScript;
 
 namespace DataStructures.LinkedList;
-
-
-public static class SimpleLinkedList
-{
-    public static SimpleLinkedList<T> LinkedList<T>(params T[] values)
-    {
-        return new SimpleLinkedList<T>(values);
-    }
-}
 
 public class SimpleLinkedList<T> : ILinkedList<T>
 {
     public Node<T>? Head { get; private set; }
 
-    public SimpleLinkedList() => 
+    private SimpleLinkedList() => 
         Head = null;
 
     public SimpleLinkedList(params T[] values) : this() => 

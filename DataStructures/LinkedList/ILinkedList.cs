@@ -4,7 +4,6 @@ public interface ILinkedList<T> : IEnumerable<T>
 {
     Node<T>? Head { get; }
     void InsertAtStart(T value);
-    string ToString();
     void InsertAtEnd(T value);
     void InsertValues(params T[] values);
     void InsertAt(int index, T value);

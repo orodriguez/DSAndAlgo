@@ -1,25 +1,14 @@
+using DataStructures.LinkedList;
+
 namespace Tests;
 
 public class DoublyLinkedListTest
 {
     [Fact]
-    public void ToArray()
+    public void Constructor_HeadIsNull()
     {
-        var dll = new DoublyLinkedList<int>(1, 2);
+        var dll = new DoublyLinkedList<int>();
         
-        Assert.Equal(new[] {1, 2}, dll.ToArray());
-    }
-}
-
-public class DoublyLinkedList<T>
-{
-    public DoublyLinkedList(params T[] values)
-    {
-        throw new NotImplementedException();
-    }
-
-    public T[] ToArray()
-    {
-        throw new NotImplementedException();
+        Assert.Equal(new[] {1, 2}, dll);
     }
 }
