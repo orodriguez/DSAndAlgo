@@ -8,8 +8,21 @@ public class DoublyLinkedList<T> : ILinkedList<T>
 
     private Node? Last { get; set; } = null;
 
-    public void InsertAtStart(T value) => 
-        Head = new Node(value);
+    public void InsertAtStart(T value)
+    {
+        var node = new Node(value);
+        if (Head != null)
+        {
+            Head.Previous = node;
+            node.Next = Head;
+        }
+        else
+        {
+            Last = node;
+        }
+
+        Head = node;
+    }
 
     public void InsertAtEnd(T value)
     {
@@ -47,10 +60,13 @@ public class DoublyLinkedList<T> : ILinkedList<T>
             yield return itr.Value; 
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public IEnumerable<T> EnumerateBackwards()
     {
-        return GetEnumerator();
+        for (var itr = Last; itr != null; itr = itr.Previous)
+            yield return itr.Value;
     }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private class Node
     {
