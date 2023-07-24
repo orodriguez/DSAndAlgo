@@ -1,15 +1,17 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace DataStructures.LinkedList;
 
-public class LinkedList<T> : ILinkedList<T>
+public class SimpleLinkedList<T> : ILinkedList<T>
 {
     public Node<T>? Head { get; private set; }
 
-    public LinkedList()
+    public SimpleLinkedList()
     {
         Head = null;
     }
 
-    public LinkedList(T value) 
+    public SimpleLinkedList(T value) 
     {
         Head = new Node<T>(value);
     }
@@ -135,5 +137,14 @@ public class LinkedList<T> : ILinkedList<T>
                 break;
             }
         }
+    }
+
+    public T[] ToArray() => 
+        ToEnumerable().ToArray();
+
+    private IEnumerable<T> ToEnumerable()
+    {
+        for (var itr = Head; itr != null; itr = itr.Next)
+            yield return itr.Value;
     }
 }

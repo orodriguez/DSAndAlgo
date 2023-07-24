@@ -1,11 +1,13 @@
+using DataStructures.LinkedList;
+
 namespace Tests;
 
 public class LinkedListTests
 {
-    private readonly DataStructures.LinkedList.LinkedList<string> _subject;
+    private readonly SimpleLinkedList<string> _subject;
 
     public LinkedListTests() =>
-        _subject = new DataStructures.LinkedList.LinkedList<string>();
+        _subject = new SimpleLinkedList<string>();
 
     [Fact]
     public void Constructor() =>
@@ -13,7 +15,7 @@ public class LinkedListTests
 
     [Fact]
     public void ConvertToString_Empty() => 
-        Assert.Equal("List is empty", _subject.ToString());
+        Assert.Equal(Array.Empty<string>(), _subject.ToArray());
 
     [Fact]
     public void ConvertToString_OneElement()
