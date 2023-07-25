@@ -146,9 +146,8 @@ public class DoublyLinkedList<T> : ILinkedList<T>
             Last = previousNode;
             return;
         }
-        
-        nextNode.Previous = previousNode;
-        previousNode.Next = nextNode;
+
+        previousNode.LinkTo(nextNode);
     }
 
     public void RemoveFirst()
@@ -222,6 +221,12 @@ public class DoublyLinkedList<T> : ILinkedList<T>
             Value = value;
             Next = next;
             Previous = previous;
+        }
+
+        public void LinkTo(Node node)
+        {
+            Next = node;
+            node.Previous = this;
         }
     }
 }
