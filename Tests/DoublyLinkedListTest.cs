@@ -222,4 +222,24 @@ public class DoublyLinkedListTest
         Assert.Equal(new[] {"a", "b"}, dll);
         Assert.Equal(new[] {"b", "a"}, dll.EnumerateBackwards());
     }
+    
+    [Fact]
+    public void RemoveByValue_First()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b", "c");
+        dll.RemoveByValue("a");
+        
+        Assert.Equal(new[] {"b", "c"}, dll);
+        Assert.Equal(new[] {"c", "b"}, dll.EnumerateBackwards());
+    }
+    
+    [Fact]
+    public void RemoveFirst()
+    {
+        var dll = new DoublyLinkedList<string>("a", "b", "c");
+        dll.RemoveFirst();
+        
+        Assert.Equal(new[] {"b", "c"}, dll);
+        Assert.Equal(new[] {"c", "b"}, dll.EnumerateBackwards());
+    }
 }

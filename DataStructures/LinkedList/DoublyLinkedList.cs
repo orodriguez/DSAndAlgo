@@ -120,17 +120,22 @@ public class DoublyLinkedList<T> : ILinkedList<T>
         if (Head == null)
             return;
 
+        if (Head.Value.Equals(value))
+        {
+            RemoveFirst();
+            return;
+        }
+
+        if (Last.Value.Equals(value))
+        {
+            RemoveLast();
+            return;
+        }
+
         var existingNode = FindNodeByValue(value);
 
         if (existingNode == null)
             return;
-
-        if (Head == Last)
-        {
-            Head = null;
-            Last = null;
-            return;
-        }
 
         var previousNode = existingNode.Previous;
         var nextNode = existingNode.Next;
@@ -144,6 +149,38 @@ public class DoublyLinkedList<T> : ILinkedList<T>
         
         nextNode.Previous = previousNode;
         previousNode.Next = nextNode;
+    }
+
+    public void RemoveFirst()
+    {
+        if (Head == null)
+            return;
+
+        if (Head == Last)
+        {
+            Head = null;
+            Last = null;
+            return;
+        }
+
+        Head = Head.Next;
+        Head.Previous = null;
+    }
+
+    private void RemoveLast()
+    {
+        if (Last == null)
+            return;
+
+        if (Head == Last)
+        {
+            Head = null;
+            Last = null;
+            return;
+        }
+
+        Last = Last.Previous;
+        Last.Next = null;
     }
 
     public IEnumerator<T> GetEnumerator()
