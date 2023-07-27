@@ -14,4 +14,17 @@ public class MyDictionaryTest
 
         Assert.Equal(50, d["Jul 26"]);
     }
+    
+    [Fact]
+    public void Add_Collision()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["Jul 26"] = 50
+        };
+
+        d["Jul 26"] = 60;
+
+        Assert.Equal(60, d["Jul 26"]);
+    }
 }

@@ -2,30 +2,32 @@ using System.Collections;
 
 namespace DataStructures;
 
-public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
 {
     private readonly LinkedList<KeyValuePair<TKey, TValue>>[] _buckets;
 
     public MyDictionary()
     {
         _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[10];
-        for (var i = 0; i < 10; i++) 
+        for (var i = 0; i < 10; i++)
             _buckets[i] = new LinkedList<KeyValuePair<TKey, TValue>>();
     }
 
-    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
+        _buckets
+            .SelectMany(buckets => buckets)
+            .GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public void Add(KeyValuePair<TKey, TValue> item)
     {
         var bucket = GetBucketByKey(item.Key);
+
+        var existingPair = bucket
+            .FirstOrDefault(pair => pair.Key.Equals(item.Key));
+
+        bucket.Remove(existingPair);
         bucket.AddLast(item);
     }
 
@@ -51,7 +53,8 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public int Count { get; }
     public bool IsReadOnly { get; }
-    public void Add(TKey key, TValue value) => 
+
+    public void Add(TKey key, TValue value) =>
         Add(new KeyValuePair<TKey, TValue>(key, value));
 
     public bool ContainsKey(TKey key)
