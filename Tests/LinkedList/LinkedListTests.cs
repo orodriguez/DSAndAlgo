@@ -1,6 +1,6 @@
 using DataStructures.LinkedList;
 
-namespace Tests;
+namespace Tests.LinkedList;
 
 public class LinkedListTests
 {

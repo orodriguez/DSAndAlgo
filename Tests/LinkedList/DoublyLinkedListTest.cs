@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
 using DataStructures.LinkedList;
 
-namespace Tests;
+namespace Tests.LinkedList;
 
 public class DoublyLinkedListTest
 {
