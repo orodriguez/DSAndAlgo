@@ -33,7 +33,7 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey :
 
     public void Clear()
     {
-        foreach (var bucket in _buckets) 
+        foreach (var bucket in _buckets)
             bucket.Clear();
     }
 
@@ -57,14 +57,16 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey :
     public void Add(TKey key, TValue value) =>
         Add(new KeyValuePair<TKey, TValue>(key, value));
 
-    public bool ContainsKey(TKey key)
-    {
-        throw new NotImplementedException();
-    }
+    public bool ContainsKey(TKey key) =>
+        _buckets
+            .Any(bucket =>
+                bucket.Any(pair => pair.Key.Equals(key)));
 
     public bool Remove(TKey key)
     {
-        throw new NotImplementedException();
+        var bucket = GetBucketByKey(key);
+        var pair = bucket.FirstOrDefault(pair => pair.Key.Equals(key));
+        return bucket.Remove(pair);
     }
 
     public bool TryGetValue(TKey key, out TValue value)
@@ -84,7 +86,11 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey :
         return bucket.First(pair => pair.Key!.Equals(key)).Value;
     }
 
-    public ICollection<TKey> Keys { get; }
+    public ICollection<TKey> Keys => 
+        _buckets
+            .SelectMany(bucket => bucket)
+            .Select(pair => pair.Key)
+            .ToArray();
 
     public ICollection<TValue> Values { get; }
 

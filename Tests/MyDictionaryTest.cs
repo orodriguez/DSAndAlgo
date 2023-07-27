@@ -67,4 +67,54 @@ public class MyDictionaryTest
         var contains = d.Contains(new KeyValuePair<string, int>("a", 10)); 
         Assert.False(contains);
     }
+    
+    [Fact]
+    public void ContainsKey()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+        
+        Assert.True(d.ContainsKey("a"));
+    }
+    
+    [Fact]
+    public void ContainsKey_NotFound()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+        
+        Assert.False(d.ContainsKey("c"));
+    }
+    
+    [Fact]
+    public void RemoveKey()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+
+        d.Remove("a");
+        Assert.False(d.ContainsKey("a"));
+    }
+    
+    [Fact]
+    public void RemoveKey_NotFound()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+
+        d.Remove("c");
+        Assert.Equal(new[] { "a", "b" }, d.Keys);
+    }
 }
