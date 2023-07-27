@@ -37,10 +37,9 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey :
             bucket.Clear();
     }
 
-    public bool Contains(KeyValuePair<TKey, TValue> item)
-    {
-        throw new NotImplementedException();
-    }
+    public bool Contains(KeyValuePair<TKey, TValue> item) =>
+        _buckets.SelectMany(bucket => bucket)
+            .Any(pair => Equals(pair, item));
 
     public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
     {
