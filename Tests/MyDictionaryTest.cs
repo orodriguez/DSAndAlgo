@@ -27,4 +27,18 @@ public class MyDictionaryTest
 
         Assert.Equal(60, d["Jul 26"]);
     }
+
+    [Fact]
+    public void Clear()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+        
+        d.Clear();
+        
+        Assert.Empty(d);
+    }
 }

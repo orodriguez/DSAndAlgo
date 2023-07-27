@@ -33,7 +33,8 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey :
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        foreach (var bucket in _buckets) 
+            bucket.Clear();
     }
 
     public bool Contains(KeyValuePair<TKey, TValue> item)
