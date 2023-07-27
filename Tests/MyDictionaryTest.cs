@@ -54,4 +54,17 @@ public class MyDictionaryTest
         var contains = d.Contains(new KeyValuePair<string, int>("a", 1)); 
         Assert.True(contains);
     }
+    
+    [Fact]
+    public void Contains_NotFound()
+    {
+        var d = new MyDictionary<string, int>
+        {
+            ["a"] = 1,
+            ["b"] = 2
+        };
+
+        var contains = d.Contains(new KeyValuePair<string, int>("a", 10)); 
+        Assert.False(contains);
+    }
 }
