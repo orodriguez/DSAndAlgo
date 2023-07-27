@@ -25,7 +25,8 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public void Add(KeyValuePair<TKey, TValue> item)
     {
-        throw new NotImplementedException();
+        var bucket = GetBucketByKey(item.Key);
+        bucket.AddLast(item);
     }
 
     public void Clear()
@@ -50,10 +51,8 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public int Count { get; }
     public bool IsReadOnly { get; }
-    public void Add(TKey key, TValue value)
-    {
-        throw new NotImplementedException();
-    }
+    public void Add(TKey key, TValue value) => 
+        Add(new KeyValuePair<TKey, TValue>(key, value));
 
     public bool ContainsKey(TKey key)
     {
@@ -72,17 +71,11 @@ public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public TValue this[TKey key]
     {
-        get => GetItem(key);
-        set => SetItem(key, value);
+        get => Get(key);
+        set => Add(key, value);
     }
 
-    private void SetItem(TKey key, TValue value)
-    {
-        var bucket = GetBucketByKey(key);
-        bucket.AddLast(new KeyValuePair<TKey, TValue>(key, value));
-    }
-
-    private TValue GetItem(TKey key)
+    private TValue Get(TKey key)
     {
         var bucket = GetBucketByKey(key);
         return bucket.First(pair => pair.Key!.Equals(key)).Value;
