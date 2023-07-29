@@ -5,12 +5,20 @@ namespace DataStructures;
 public class ChainingDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
 {
     private readonly LinkedList<KeyValuePair<TKey, TValue>>[] _buckets;
-
+    public Func<TKey,int> Hash { get; set; }
+    
     public ChainingDictionary()
     {
         _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[10];
         for (var i = 0; i < 10; i++)
             _buckets[i] = new LinkedList<KeyValuePair<TKey, TValue>>();
+
+        Hash = key => int.Abs(key.GetHashCode() % 10);
+    }
+
+    public ChainingDictionary(Func<TKey,int> hash) : this()
+    {
+        Hash = hash;
     }
 
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
@@ -96,14 +104,8 @@ public class ChainingDictionary<TKey, TValue> : IDictionary<TKey, TValue> where 
 
     private LinkedList<KeyValuePair<TKey, TValue>> GetBucketByKey(TKey key)
     {
-        var hashCode = CustomHash(key);
+        var hashCode = Hash(key);
         var bucket = _buckets[hashCode];
         return bucket;
-    }
-
-    private int CustomHash(TKey key)
-    {
-        var hasCode = key.GetHashCode().ToString().Last();
-        return hasCode % 10;
     }
 }

@@ -14,13 +14,24 @@ public abstract class AbstractDictionaryTest
     }
 
     [Fact]
-    public void Add_Collision()
+    public void OverrideKey()
     {
         var d = CreateEmptyDictionary<string, int>();;
         d["Jul 26"] = 50;
         d["Jul 26"] = 60;
 
         Assert.Equal(60, d["Jul 26"]);
+    }
+    
+    [Fact]
+    public void Collision()
+    {
+        var d = CreateEmptyDictionary<string, int>(hash: _ => 1);;
+        d["Jul 26"] = 50;
+        d["Jul 27"] = 60;
+
+        Assert.Equal(50, d["Jul 26"]);
+        Assert.Equal(60, d["Jul 27"]);
     }
 
     [Fact]
@@ -100,4 +111,7 @@ public abstract class AbstractDictionaryTest
     
     protected abstract IDictionary<TKey, TValue> CreateEmptyDictionary<TKey, TValue>() 
         where TKey : notnull;
+
+    protected abstract IDictionary<TKey, TValue> CreateEmptyDictionary<TKey, TValue>(
+        Func<TKey, int> hash) where TKey : notnull;
 }

@@ -1,10 +1,12 @@
+using DataStructures;
+
 namespace Tests.Dictionary;
 
-public class LinearProbingDictionaryTest : AbstractDictionaryTest
+public class ChainingDictionaryTest : AbstractDictionaryTest
 {
     protected override IDictionary<TKey, TValue> CreateEmptyDictionary<TKey, TValue>() => 
-        new LinearProbingDictionary<TKey, TValue>();
+        new ChainingDictionary<TKey, TValue>();
 
     protected override IDictionary<TKey, TValue> CreateEmptyDictionary<TKey, TValue>(Func<TKey, int> hash) => 
-        new LinearProbingDictionary<TKey, TValue>(hash);
+        new ChainingDictionary<TKey, TValue>(hash);
 }
