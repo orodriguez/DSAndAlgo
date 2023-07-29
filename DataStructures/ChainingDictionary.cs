@@ -2,11 +2,11 @@ using System.Collections;
 
 namespace DataStructures;
 
-public class MyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
+public class ChainingDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
 {
     private readonly LinkedList<KeyValuePair<TKey, TValue>>[] _buckets;
 
-    public MyDictionary()
+    public ChainingDictionary()
     {
         _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[10];
         for (var i = 0; i < 10; i++)
