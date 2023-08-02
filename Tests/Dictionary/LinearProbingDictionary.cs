@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO.Pipes;
 using static System.Math;
 
 namespace Tests.Dictionary;
@@ -76,10 +77,8 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         throw new NotImplementedException();
     }
 
-    public bool ContainsKey(TKey key)
-    {
-        throw new NotImplementedException();
-    }
+    public bool ContainsKey(TKey key) => 
+        _pairs.Any(pair => EqualityComparer<TKey>.Default.Equals(pair.Key, key));
 
     public bool Remove(TKey key)
     {
