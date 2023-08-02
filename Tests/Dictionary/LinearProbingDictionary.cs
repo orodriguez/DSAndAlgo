@@ -82,7 +82,12 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public bool Remove(TKey key)
     {
-        throw new NotImplementedException();
+        var index = FindIndex(key);
+        if (index == -1)
+            return false;
+        
+        _pairs[index] = default;
+        return true;
     }
 
     public bool TryGetValue(TKey key, out TValue value)
@@ -98,7 +103,11 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         set => Add(new KeyValuePair<TKey, TValue>(key, value));
     }
 
-    public ICollection<TKey> Keys { get; }
+    public ICollection<TKey> Keys => _pairs
+        .Where(pair => !EqualityComparer<KeyValuePair<TKey, TValue>>.Default
+            .Equals(pair, default(KeyValuePair<TKey, TValue>)))
+        .Select(pair => pair.Key)
+        .ToArray();
 
     public ICollection<TValue> Values { get; }
 
