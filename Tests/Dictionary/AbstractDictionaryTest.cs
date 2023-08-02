@@ -14,7 +14,7 @@ public abstract class AbstractDictionaryTest
     }
 
     [Fact]
-    public void OverrideKey()
+    public void Add_SameKey()
     {
         var d = CreateEmptyDictionary<string, int>();;
         d["Jul 26"] = 50;
@@ -24,7 +24,7 @@ public abstract class AbstractDictionaryTest
     }
     
     [Fact]
-    public void Collision()
+    public void Add_ForceCollision()
     {
         var d = CreateEmptyDictionary<string, int>(hash: _ => 1);;
         d["Jul 26"] = 50;

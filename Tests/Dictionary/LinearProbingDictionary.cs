@@ -6,19 +6,17 @@ namespace Tests.Dictionary;
 public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     where TKey : notnull
 {
-    private readonly KeyValuePair<TKey, TValue>[] _pairs = new KeyValuePair<TKey, TValue>[10];
+    private const int Capacity = 10;
+    private readonly KeyValuePair<TKey, TValue>[] _pairs = 
+        new KeyValuePair<TKey, TValue>[Capacity];
 
     private Func<TKey, int> Hash { get; set; }
 
-    public LinearProbingDictionary()
-    {
-        Hash = key => int.Abs(key.GetHashCode() % 10);
-    }
+    public LinearProbingDictionary() => 
+        Hash = key => int.Abs(key.GetHashCode()) % Capacity;
 
-    public LinearProbingDictionary(Func<TKey, int> hash)
-    {
+    public LinearProbingDictionary(Func<TKey, int> hash) => 
         Hash = hash;
-    }
 
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
@@ -32,13 +30,20 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public void Add(KeyValuePair<TKey, TValue> item)
     {
-        var hash = Hash(item.Key);
-        while (_pairs[hash].Equals(null))
+        var currentIndex = Hash(item.Key);
+        while (!_pairs[currentIndex].Equals(default(KeyValuePair<TKey, TValue>)))
         {
-            hash++;
+            if (_pairs[currentIndex].Key.Equals(item.Key))
+            {
+                _pairs[currentIndex] = new KeyValuePair<TKey, TValue>(
+                    item.Key, item.Value);
+                return;
+            }
+
+            currentIndex = (currentIndex + 1) % Capacity;
         }
 
-        _pairs[hash] = item;
+        _pairs[currentIndex] = item;
     }
 
     public void Clear()
@@ -82,16 +87,45 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public bool TryGetValue(TKey key, out TValue value)
     {
-        throw new NotImplementedException();
+        var index = FindIndex(key);
+        value = _pairs[index].Value;
+        return true;
     }
 
     public TValue this[TKey key]
     {
-        get => _pairs[Hash(key)].Value;
+        get => GetValue(key);
         set => Add(new KeyValuePair<TKey, TValue>(key, value));
     }
 
     public ICollection<TKey> Keys { get; }
 
     public ICollection<TValue> Values { get; }
+
+    private TValue GetValue(TKey key)
+    {
+        TryGetValue(key, out var value);
+        if (EqualityComparer<TValue>.Default.Equals(value, default))
+            throw new KeyNotFoundException();
+        return value;
+    }
+
+    private int FindIndex(TKey key)
+    {
+        var firstIndex = Hash(key);
+        var currentIndex = firstIndex;
+        var currentPair = _pairs[currentIndex];
+        while (!currentPair.Equals(default(KeyValuePair<TKey, TValue>)))
+        {
+            if (currentPair.Key.Equals(key))
+                return currentIndex;
+
+            currentIndex = (currentIndex + 1) % Capacity;
+            currentPair = _pairs[currentIndex];
+
+            if (currentIndex == firstIndex)
+                break;
+        }
+        return -1;
+    }
 }
