@@ -6,11 +6,14 @@ namespace Tests.Dictionary;
 public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     where TKey : notnull
 {
-    private const int Capacity = 10;
-    private readonly KeyValuePair<TKey, TValue>[] _pairs = 
+    private const int InitialCapacity = 10;
+    private const int Capacity = InitialCapacity;
+
+    private KeyValuePair<TKey, TValue>[] _pairs = 
         new KeyValuePair<TKey, TValue>[Capacity];
 
     private Func<TKey, int> Hash { get; set; }
+
 
     public LinearProbingDictionary() => 
         Hash = key => int.Abs(key.GetHashCode()) % Capacity;
@@ -18,10 +21,10 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     public LinearProbingDictionary(Func<TKey, int> hash) => 
         Hash = hash;
 
-    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
+        _pairs
+            .Where(pair => !pair.Equals(default(KeyValuePair<TKey, TValue>)))
+            .GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -48,7 +51,7 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        _pairs = new KeyValuePair<TKey, TValue>[InitialCapacity];
     }
 
     public bool Contains(KeyValuePair<TKey, TValue> item)
