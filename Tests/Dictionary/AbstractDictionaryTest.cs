@@ -115,7 +115,7 @@ public abstract class AbstractDictionaryTest
         d["a"] = 1;
 
         d.Remove("c");
-        Assert.Equal(new[] { "a" }, d.Keys);
+        Assert.Equal(new[] { "a" }, d.Keys.Order());
     }
     
     protected abstract IDictionary<TKey, TValue> CreateEmptyDictionary<TKey, TValue>() 
