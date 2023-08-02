@@ -26,10 +26,8 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
             .Where(pair => !pair.Equals(default(KeyValuePair<TKey, TValue>)))
             .GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => 
+        GetEnumerator();
 
     public void Add(KeyValuePair<TKey, TValue> item)
     {
@@ -54,10 +52,10 @@ public class LinearProbingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         _pairs = new KeyValuePair<TKey, TValue>[InitialCapacity];
     }
 
-    public bool Contains(KeyValuePair<TKey, TValue> item)
-    {
-        throw new NotImplementedException();
-    }
+    public bool Contains(KeyValuePair<TKey, TValue> item) => 
+        _pairs.Any(pair => 
+            EqualityComparer<TKey>.Default.Equals(pair.Key, item.Key) 
+            && EqualityComparer<TValue>.Default.Equals(pair.Value, item.Value));
 
     public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
     {

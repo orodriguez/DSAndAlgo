@@ -56,9 +56,18 @@ public abstract class AbstractDictionaryTest
         var contains = d.Contains(new KeyValuePair<string, int>("a", 1)); 
         Assert.True(contains);
     }
-
+    
     [Fact]
-    public void Contains_NotFound()
+    public void Contains_KeyDoesNotExist()
+    {
+        var d = CreateEmptyDictionary<string, int>();;
+        
+        var contains = d.Contains(new KeyValuePair<string, int>("a", 10)); 
+        Assert.False(contains);
+    }
+    
+    [Fact]
+    public void Contains_KeyExistButNotWithValue()
     {
         var d = CreateEmptyDictionary<string, int>();;
         d["a"] = 1;
