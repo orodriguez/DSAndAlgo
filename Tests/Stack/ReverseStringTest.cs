@@ -1,6 +1,6 @@
 using DataStructures.Stack;
 
-namespace Tests;
+namespace Tests.Stack;
 using static ReverseString;
 
 public class ReverseStringTest
