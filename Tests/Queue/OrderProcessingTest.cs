@@ -14,8 +14,10 @@ public class OrderProcessingTest
     public async Task Test()
     {
         var queue = new Queue<string>();
-        var placer = new OrderPlacer(queue, _output.WriteLine, 
-            () => { Thread.Sleep(1);});
+        
+        var placer = new OrderPlacer(queue, 
+            _output.WriteLine, 
+            () => { Thread.Sleep(1); });
         var orderPlacingTask = placer.PlaceOrdersAsync(new[]
         {
             "Pizza", 
@@ -25,7 +27,8 @@ public class OrderProcessingTest
             "Burger"
         });
         
-        var server = new OrderServer(queue, _output.WriteLine, 
+        var server = new OrderServer(queue, 
+            _output.WriteLine, 
             () => { Thread.Sleep(2); });
         var orderServingTask = server.ServeAsync();
         
