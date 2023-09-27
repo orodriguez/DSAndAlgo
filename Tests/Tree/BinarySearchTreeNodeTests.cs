@@ -9,10 +9,10 @@ public class BinarySearchTreeNodeTests
     [InlineData(new[] {1, 2}, new[] {1, 2})]
     [InlineData(new[] {2, 1}, new[] {1, 2})]
     [InlineData(new[] {1, 3, 5, 2, 4}, new[] {1, 2, 3, 4, 5})]
-    public void TraverseInOrder(int[] elements, int[] elementsInExpectedOrder)
+    public void TraverseInOrder(int[] values, int[] expectedOrder)
     {
-        var tree = new BinarySearchTreeNode(elements);
-        Assert.Equal(elementsInExpectedOrder,tree.TraverseInOrder());
+        var tree = new BinarySearchTreeNode(values);
+        Assert.Equal(expectedOrder,tree.TraverseInOrder());
     }
 
     [Theory]
