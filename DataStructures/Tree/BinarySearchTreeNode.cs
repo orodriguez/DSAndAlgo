@@ -2,7 +2,7 @@ namespace DataStructures.Tree;
 
 public class BinarySearchTreeNode
 {
-    private int Value { get; set; }
+    private int Value { get; }
     private BinarySearchTreeNode? Left { get; set; }
     private BinarySearchTreeNode? Right { get; set; }
 
@@ -13,8 +13,10 @@ public class BinarySearchTreeNode
         if (!values.Any())
             throw new ArgumentException("Values can not be empty");
         
-        Value = values.First();
-        foreach (var value in values.Skip(1)) AddChild(value);
+        (Value, var tail) = (values.First(), values.Skip(1));
+        
+        foreach (var value in tail)
+            AddChild(value);
     }
 
     private void AddChild(int value)
