@@ -23,17 +23,14 @@ public class BinarySearchTreeNode
             return;
 
         if (value < Value)
-            if (Left == null)
-                Left = new BinarySearchTreeNode(value);
-            else
-                Left.AddChild(value);
-        else
         {
-            if (Right == null)
-                Right = new BinarySearchTreeNode(value);
-            else
-                Right.AddChild(value);
+            Left ??= new BinarySearchTreeNode(value);
+            Left.AddChild(value);
+            return;
         }
+        
+        Right ??= new BinarySearchTreeNode(value);
+        Right.AddChild(value);
     }
 
     public IEnumerable<int> Ordered() =>
@@ -62,33 +59,9 @@ public class BinarySearchTreeNode
         return Right?.Contains(value) ?? false;
     }
 
-    public int Min()
-    {
-        var min = Value;
+    public int Max() => Right?.Max() ?? Value;
 
-        var currentNode = Left;
-        while (currentNode != null)
-        {
-            min = Math.Min(min, currentNode.Value);
-            currentNode = currentNode.Left;
-        }
-        
-        return min;
-    }
-
-    public int Max()
-    {
-        var max = Value;
-
-        var currentNode = Right;
-        while (currentNode != null)
-        {
-            max = Math.Max(max, currentNode.Value);
-            currentNode = currentNode.Right;
-        }
-        
-        return max;
-    }
+    public int Min() => Left?.Min() ?? Value;
 
     public int Sum() => 
         Value + (Left?.Sum() ?? 0) + (Right?.Sum() ?? 0);
