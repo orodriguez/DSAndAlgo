@@ -36,19 +36,20 @@ public class BinarySearchTreeNode
         }
     }
 
-    public IEnumerable<int> TraverseInOrder()
-    {
-        var result = new List<int>();
+    public IEnumerable<int> Ordered() =>
+        (Left?.Ordered() ?? Array.Empty<int>())
+            .Concat(new[] { Value })
+            .Concat(Right?.Ordered() ?? Array.Empty<int>());
 
-        if (Left != null)
-            result.AddRange(Left.TraverseInOrder());
+    public IEnumerable<int> PreOrdered() =>
+        new[] { Value }
+            .Concat(Left?.PreOrdered() ?? Array.Empty<int>())
+            .Concat(Right?.PreOrdered() ?? Array.Empty<int>());
 
-        result.Add(Value);
-
-        if (Right != null)
-            result.AddRange(Right.TraverseInOrder());
-        return result;
-    }
+    public IEnumerable<int> PostOrdered() =>
+        (Left?.PostOrdered() ?? Array.Empty<int>())
+            .Concat(Right?.PostOrdered() ?? Array.Empty<int>())
+            .Concat(new[] { Value });
 
     public bool Contains(int value)
     {
@@ -56,11 +57,39 @@ public class BinarySearchTreeNode
             return true;
 
         if (value < Value)
-            return Left != null && Left.Contains(value);
-
-        if (value > Value && Right != null)
-            return Right.Contains(value);
-
-        return false;
+            return Left?.Contains(value) ?? false;
+        
+        return Right?.Contains(value) ?? false;
     }
+
+    public int Min()
+    {
+        var min = Value;
+
+        var currentNode = Left;
+        while (currentNode != null)
+        {
+            min = Math.Min(min, currentNode.Value);
+            currentNode = currentNode.Left;
+        }
+        
+        return min;
+    }
+
+    public int Max()
+    {
+        var max = Value;
+
+        var currentNode = Right;
+        while (currentNode != null)
+        {
+            max = Math.Max(max, currentNode.Value);
+            currentNode = currentNode.Right;
+        }
+        
+        return max;
+    }
+
+    public int Sum() => 
+        Value + (Left?.Sum() ?? 0) + (Right?.Sum() ?? 0);
 }
