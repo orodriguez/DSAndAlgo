@@ -1,70 +1,95 @@
 namespace DataStructures.Tree;
 
-public class BinarySearchTreeNode
+public class BinarySearchTreeNode : IBinarySearchTreeNode
 {
-    private int Value { get; }
-    private BinarySearchTreeNode? Left { get; set; }
-    private BinarySearchTreeNode? Right { get; set; }
-
-    private BinarySearchTreeNode(int value) => Value = value;
-    
-    public BinarySearchTreeNode(params int[] values)
+    public static BinarySearchTreeNode From(int[] values)
     {
         if (!values.Any())
             throw new ArgumentException("Values can not be empty");
-        
-        (Value, var tail) = (values.First(), values.Skip(1));
-        
-        foreach (var value in tail)
-            AddChild(value);
+
+        var node = new BinarySearchTreeNode(values.First());
+
+        node.AddChildren(values.Skip(1));
+
+        return node;
     }
 
-    private void AddChild(int value)
+    public void AddChild(int value)
     {
         if (value == Value)
             return;
 
         if (value < Value)
-        {
-            Left ??= new BinarySearchTreeNode(value);
             Left.AddChild(value);
-            return;
-        }
-        
-        Right ??= new BinarySearchTreeNode(value);
-        Right.AddChild(value);
+        else
+            Right.AddChild(value);
     }
 
     public IEnumerable<int> Ordered() =>
-        (Left?.Ordered() ?? Array.Empty<int>())
-            .Concat(new[] { Value })
-            .Concat(Right?.Ordered() ?? Array.Empty<int>());
+        Left.Ordered().Concat(new[] { Value }).Concat(Right.Ordered());
 
     public IEnumerable<int> PreOrdered() =>
-        new[] { Value }
-            .Concat(Left?.PreOrdered() ?? Array.Empty<int>())
-            .Concat(Right?.PreOrdered() ?? Array.Empty<int>());
+        new[] { Value }.Concat(Left.PreOrdered()).Concat(Right.PreOrdered());
 
     public IEnumerable<int> PostOrdered() =>
-        (Left?.PostOrdered() ?? Array.Empty<int>())
-            .Concat(Right?.PostOrdered() ?? Array.Empty<int>())
-            .Concat(new[] { Value });
+        Left.PostOrdered().Concat(Right.PostOrdered()).Concat(new[] { Value });
 
     public bool Contains(int value)
     {
         if (value == Value)
             return true;
 
-        if (value < Value)
-            return Left?.Contains(value) ?? false;
-        
-        return Right?.Contains(value) ?? false;
+        return value < Value ? Left.Contains(value) : Right.Contains(value);
     }
 
-    public int Max() => Right?.Max() ?? Value;
+    public int Max() => Math.Max(Value, Right.Max());
 
-    public int Min() => Left?.Min() ?? Value;
+    public int Min() => Math.Min(Value, Left.Min());
 
-    public int Sum() => 
-        Value + (Left?.Sum() ?? 0) + (Right?.Sum() ?? 0);
+    public int Sum() => Value + Left.Sum() + Right.Sum();
+
+    private void AddChildren(IEnumerable<int> values)
+    {
+        foreach (var value in values.Skip(1))
+            AddChild(value);
+    }
+
+    private int Value { get; }
+
+    private IBinarySearchTreeNode Left { get; set; }
+
+    private IBinarySearchTreeNode Right { get; set; }
+
+    private BinarySearchTreeNode(int value)
+    {
+        Value = value;
+        Left = new EmptyNode(
+            addedValue => Left = new BinarySearchTreeNode(addedValue));
+        Right = new EmptyNode(
+            addedValue => Right = new BinarySearchTreeNode(addedValue));
+    }
+
+    private class EmptyNode : IBinarySearchTreeNode
+    {
+        private readonly Action<int> _addChild;
+
+        public EmptyNode(Action<int> addChild) =>
+            _addChild = addChild;
+
+        public void AddChild(int value) => _addChild(value);
+
+        public IEnumerable<int> Ordered() => Array.Empty<int>();
+
+        public IEnumerable<int> PreOrdered() => Array.Empty<int>();
+
+        public IEnumerable<int> PostOrdered() => Array.Empty<int>();
+
+        public bool Contains(int value) => false;
+
+        public int Max() => 0;
+
+        public int Min() => int.MaxValue;
+
+        public int Sum() => 0;
+    }
 }

@@ -12,7 +12,7 @@ public class BinarySearchTreeNodeTests
         new[] {7, 12, 14, 15, 20, 23, 27, 88})]
     public void InOrder(int[] values, int[] expectedOrder)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expectedOrder,tree.Ordered());
     }
     
@@ -23,7 +23,7 @@ public class BinarySearchTreeNodeTests
         new[] {15, 12, 7, 14, 27, 20, 23, 88})]
     public void PreOrder(int[] values, int[] expectedOrder)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expectedOrder,tree.PreOrdered());
     }
     
@@ -34,7 +34,7 @@ public class BinarySearchTreeNodeTests
         new[] {7, 14, 12, 23, 20, 88, 27, 15})]
     public void PostOrder(int[] values, int[] expectedOrder)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expectedOrder,tree.PostOrdered());
     }
 
@@ -44,7 +44,7 @@ public class BinarySearchTreeNodeTests
     [InlineData(new[] { 1, 2, 3 }, 4, false)]
     public void Contains(int[] values, int value, bool expected)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expected, tree.Contains(value));
     }
     
@@ -53,7 +53,7 @@ public class BinarySearchTreeNodeTests
     [InlineData(new[] { 4, 7, 2, 8 }, 2)]
     public void Min(int[] values, int expected)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expected, tree.Min());
     }
     
@@ -62,7 +62,7 @@ public class BinarySearchTreeNodeTests
     [InlineData(new[] { 4, 7, 2, 8, 10, 9 }, 10)]
     public void Max(int[] values, int expected)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expected, tree.Max());
     }
     
@@ -71,7 +71,7 @@ public class BinarySearchTreeNodeTests
     [InlineData(new[] { 1, 2, 3, 4 }, 10)]
     public void Sum(int[] values, int expected)
     {
-        var tree = new BinarySearchTreeNode(values);
+        var tree = BinarySearchTreeNode.From(values);
         Assert.Equal(expected, tree.Sum());
     }
     
@@ -79,7 +79,7 @@ public class BinarySearchTreeNodeTests
     public void ValuesConstructor_WhenEmpty_ThrowsArgumentException()
     {
         var exception = Assert.Throws<ArgumentException>(() => 
-            new BinarySearchTreeNode());
+            BinarySearchTreeNode.From(Array.Empty<int>()));
         Assert.Equal("Values can not be empty", exception.Message);
     }
 }
