@@ -10,4 +10,6 @@ public interface IBinarySearchTreeNode
     int Max();
     int Min();
     int Sum();
+    IBinarySearchTreeNode Delete(int value);
+    bool IsEmpty { get; }
 }
