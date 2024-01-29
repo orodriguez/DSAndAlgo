@@ -72,6 +72,7 @@ public class BinarySearchTreeNode : IBinarySearchTreeNode
 
         if (Right.IsEmpty) return Left;
 
+        // Has children on left and right
         var minRight = Right.Min();
         Value = minRight;
         Right = Right.Delete(minRight);
