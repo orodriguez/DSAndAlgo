@@ -50,7 +50,7 @@ public class BinarySearchTreeNode : IBinarySearchTreeNode
 
     private void AddChildren(IEnumerable<int> values)
     {
-        foreach (var value in values.Skip(1))
+        foreach (var value in values)
             AddChild(value);
     }
 
